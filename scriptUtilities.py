@@ -1,3 +1,14 @@
+# Script Description
+#---------------------------
+# This script is for multiple debug and utility functions.
+
+# Metadata
+#---------------------------
+# Author: RedRogueXIII (Michael Cecconet)
+# Contact: red_rogue_xiii@hotmail.com
+# Website: https://github.com/RedRogueXIII/MetasequoiaScripts
+# Version Date: July 7, 2016
+
 import MQSystem
 import math
 from collisionDetection import *
@@ -84,6 +95,7 @@ def getPoints(vColl):
 def getObjectByName(name):
 	doc = MQSystem.getDocument()
 	for i in range(0, len(doc.object)):
+		if doc.object[i] is None: continue
 		if doc.object[i].name == name:
 			return doc.object[i]
 	return None
@@ -148,6 +160,7 @@ def virtualTriangulate(points):
 	vertexCount = len(points)
 	if vertexCount == 4:
 		# Quad -> Shortest diagonal
+		# TODO ###################################### Implement split by smallest angle difference between triangle normals.
 		e1 = points[0].getPos() - points[2].getPos()
 		e2 = points[1].getPos() - points[3].getPos()
 		m1 = quickMagnitude(e1)
