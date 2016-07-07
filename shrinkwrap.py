@@ -1,5 +1,25 @@
-# Raycast project and move vertices to existing geometry surfaces.
+# Script Description
+#---------------------------
+# This script is for projecting vertices onto existing geometric surfaces.
+# It requires multiple Metasequoia objects to works, from the current active Metasequoia object it projects the selected vertices onto a second target object's geometry.
+# It offers different projection options, (X,Y,Z, Camera View, Custom Vector, and Per Vertex)
+# X, Y, Z, Camera View, Custom Vector only project all selected vertices along a single straight direction specified to the closest point of the target geometry.
+# Per-Vertex option projects per vertice by the vertex normal, so it wraps geometry instead. 
+
+
+# Metadata
+#---------------------------
+# Author: RedRogueXIII (Michael Cecconet)
+# Contact: red_rogue_xiii@hotmail.com
+# Website: https://github.com/RedRogueXIII/MetasequoiaScripts
+# Version Date: July 7, 2016
+
+# TODO
+#---------------------------
+# Fix Quadrilateral triangulation scheme to match Metasequoia default.
+# No support for N-Gons yet.
 # Ideally change from Dialog to Window so that camera can be adjusted before committing changes.
+# Does not account for subdivision, mirror, or lathe modifiers, only existing geometry. 
 
 from scriptUtilities import *
 import timeit
@@ -12,25 +32,25 @@ class VectorSelectDialog(MQWidget.Dialog):
 		self.ZBAWKS.enabled = False
 
 		if self.WHERE.currentIndex == 0:
-			print ("Picked X Axis Option")
+			#print ("Picked X Axis Option")
 			self.myDisplayVector = MQSystem.newPoint(1,0,0)
 		elif self.WHERE.currentIndex == 1:
-			print ("Picked Y Axis Option")
+			#print ("Picked Y Axis Option")
 			self.myDisplayVector = MQSystem.newPoint(0,1,0)
 		elif self.WHERE.currentIndex == 2:
-			print ("Picked Z Axis Option")
+			#print ("Picked Z Axis Option")
 			self.myDisplayVector = MQSystem.newPoint(0,0,1)
 		elif self.WHERE.currentIndex == 3:
-			print ("Picked Camera View Option")
+			#print ("Picked Camera View Option")
 			self.myDisplayVector = getCameraLookVector()
 		elif self.WHERE.currentIndex == 4:
-			print ("Picked Custom Vector Option")
+			#print ("Picked Custom Vector Option")
 			self.myDisplayVector = self.myCustomVector
 			self.XBAWKS.enabled = True
 			self.YBAWKS.enabled = True
 			self.ZBAWKS.enabled = True
 		elif self.WHERE.currentIndex == 5:
-			print ("Picked Per-Vertex Option")
+			#print ("Picked Per-Vertex Option")
 			self.myDisplayVector = MQSystem.newPoint(0,0,0)
 
 		self.XBAWKS.text = str(self.myDisplayVector.x)
@@ -46,6 +66,7 @@ class VectorSelectDialog(MQWidget.Dialog):
 		doc = MQSystem.getDocument()
 		for n in range( 0, doc.numObject):
 			#print("TESTING "+doc.object[n].name + " against " + self.TARGET.getItem(self.TARGET.currentIndex) )
+			if doc.object[n] is None: continue
 			if doc.object[n].name == self.TARGET.getItem(self.TARGET.currentIndex):
 				pos = n
 				break
@@ -139,7 +160,7 @@ dlg = VectorSelectDialog(MQWidget.getMainWindow())
 
 if dlg.execute() == "ok":
 	start = timeit.timeit()
-	print("Attempting to run: "+dlg.WHERE.getItem(dlg.WHERE.currentIndex)+str(dlg.myDisplayVector))
+	#print("Attempting to run: "+dlg.WHERE.getItem(dlg.WHERE.currentIndex)+str(dlg.myDisplayVector))
 	ray = dlg.myDisplayVector
 	ray.normalize()
 	#print("RAY: "+str(ray))
