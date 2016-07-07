@@ -1,3 +1,15 @@
+# Script Description
+#---------------------------
+# This script is for for batch renaming multiple Metasequoia geometry objects, by adding a prefix in front of the current object name.
+# For example, running it with objects Leg1, Arm1 selected and inputting prefix Left, will rename the objects to Left_Leg1, Left_Arm1 respectively.
+
+# Metadata
+#---------------------------
+# Author: RedRogueXIII (Michael Cecconet)
+# Contact: red_rogue_xiii@hotmail.com
+# Website: https://github.com/RedRogueXIII/MetasequoiaScripts
+# Version Date: July 7, 2016
+
 def applyPrefix( prefix, name):
 	test = name.find(prefix)
 	if test == -1 or test != 0:
