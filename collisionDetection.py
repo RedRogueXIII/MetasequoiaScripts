@@ -1,3 +1,14 @@
+# Script Description
+#---------------------------
+# This script is for collision detection functions.
+
+# Metadata
+#---------------------------
+# Author: RedRogueXIII (Michael Cecconet)
+# Contact: red_rogue_xiii@hotmail.com
+# Website: https://github.com/RedRogueXIII/MetasequoiaScripts
+# Version Date: July 7, 2016
+
 import MQSystem
 
 #r2 is direction, r1 is origin
